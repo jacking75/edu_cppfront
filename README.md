@@ -1,5 +1,7 @@
 # cppfront 학습 저장소
-
+  
+아래는 공식 문서에 있는 내용을 번역(기계번역) 정리한 것이다.  
+  
 # cppfront란 무엇인가요?
 
 출처: [https://hsutter.github.io/cppfront/](https://hsutter.github.io/cppfront/)
