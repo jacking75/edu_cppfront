@@ -1,36 +1,45 @@
 # cppfront 학습 저장소
   
 아래는 공식 문서에 있는 내용을 번역(기계번역) 정리한 것이다.  
+    
+<br>    
+
+---    
+## cppfront란 무엇인가요?
+출처: [https://hsutter.github.io/cppfront/](https://hsutter.github.io/cppfront/)   
   
-# cppfront란 무엇인가요?
-
-출처: [https://hsutter.github.io/cppfront/](https://hsutter.github.io/cppfront/)
-
-[**Cppfront**](https://github.com/hsutter/cppfront)는 Cpp2 구문을 오늘날의 Cpp1 구문으로 컴파일하는 컴파일러입니다. 소스 파일의 이름을 `.cpp`에서 `.cpp2`로 바꾸고 [빌드 단계를 추가하기만 하면 모든 C++20 이상 컴파일러와 기존의 모든 C++ 도구(디버거, 빌드 시스템, 새니타이저 등)에서 Cpp2 문법을 시험할 수 있으며, 결과는 C++20 이상 컴파일러와 모든 C++ 도구에서 작동하기만 하면 됩니다.](https://hsutter.github.io/cppfront/#adding-cppfront-in-your-ide-build-system)
-
+[**Cppfront**](https://github.com/hsutter/cppfront)는 Cpp2 구문을 오늘날의 Cpp1 구문으로 컴파일하는 컴파일러입니다. 소스 파일의 이름을 `.cpp`에서 `.cpp2`로 바꾸고 [빌드 단계를 추가하기만 하면 모든 C++20 이상 컴파일러와 기존의 모든 C++ 도구(디버거, 빌드 시스템, 새니타이저 등)에서 Cpp2 문법을 시험할 수 있으며, 결과는 C++20 이상 컴파일러와 모든 C++ 도구에서 작동하기만 하면 됩니다.](https://hsutter.github.io/cppfront/#adding-cppfront-in-your-ide-build-system)  
+  
 이는 의도적으로 최초의 C++ 컴파일러인 [**cfront**](https://en.wikipedia.org/wiki/Cfront)를 사용한 Bjarne Stroustrup의 현명한 접근 방식을 따르고 있습니다: 1980년대와 1990년대에 스트로스트럽은 C++를 순수 C로 변환하기 위해 cfront를 만들었고, 마찬가지로 동일한 소스 파일에서 C++를 C와 인터리브할 수 있도록 하고, C++가 래핑/마샬링/썽킹 없이도 항상 모든 C 코드를 호출할 수 있도록 보장했습니다. 스트로스트럽은 순수 C++ 컴파일러를 제공함으로써 이미 존재하는 C 에코시스템과의 완벽한 호환성을 보장했고, C++를 C로 먼저 변환하는 빌드 단계만 추가하면 기존 C 프로젝트에서 C++ 코드를 쉽게 사용해 볼 수 있도록 하여 사람들이 기존 C 도구와 함께 작동하는 결과물을 만들 수 있도록 했습니다.
+    
 
-# cppfront는 어떻게 구하고 빌드하나요?
+<br>      
 
-cppfront의 전체 소스 코드는 [**Cppfront GitHub 리포지토리**](https://github.com/hsutter/cppfront)에서 확인할 수 있습니다.
-
-Cppfront는 최신 C++ 컴파일러로 빌드합니다. `/cppfront/source` 디렉토리로 이동하여 다음 중 하나를 실행합니다:
-
+---    
+## cppfront는 어떻게 구하고 빌드하나요?
+cppfront의 전체 소스 코드는 [**Cppfront GitHub 리포지토리**](https://github.com/hsutter/cppfront)에서 확인할 수 있습니다.  
+  
+Cppfront는 최신 C++ 컴파일러로 빌드합니다. `/cppfront/source` 디렉토리로 이동하여 다음 중 하나를 실행합니다:  
+  
 **MSVC 빌드 지침(Visual Studio 2019 버전 16.11 이상)**  
-cl cppfront.cpp \-std:c++20 \-EHsc
+```cl cppfront.cpp \-std:c++20 \-EHsc```  
+  
+Visual Studio 에 있는 콘솔 애플리케이션으로 빌드한다.    
+![vc build](./images/001.png)  
+  
+**GCC 빌드 지침(GCC 10 이상)**    
+```g++ cppfront.cpp std=c+++20 \-o cppfront```     
+  
+**clang 빌드 지침(clang 12 이상)**  
+```clang++ cppfront.cpp \-std=c+++20 \-o cppfront```  
+  
+끝입니다\!  
+    
+  
+<br>      
 
-**GCC 빌드 지침(GCC 10 이상)**  
-g++ cppfront.cpp std=c+++20 \-o cppfront
-
-**클랑 빌드 지침(클랑 12 이상)**  
-clang++ cppfront.cpp \-std=c+++20 \-o cppfront
-
-끝입니다\!
-
-Visual Studio 에 있는 콘솔 애플리케이션으로 빌드한다.  
-![][image1]
-
-# Hello, world\!
+--- 
+## Hello, world\!
 
 출처: [https://hsutter.github.io/cppfront/welcome/hello-world/](https://hsutter.github.io/cppfront/welcome/hello-world/) 
 
