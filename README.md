@@ -42,13 +42,13 @@ Visual Studio 에 있는 콘솔 애플리케이션으로 빌드한다.
 ## Hello, world\!
 
 출처: [https://hsutter.github.io/cppfront/welcome/hello-world/](https://hsutter.github.io/cppfront/welcome/hello-world/) 
+  
+![hello world](./images/002.png)  
 
-![][image2]
-
-## `hello.cpp2` 프로그램
+### `hello.cpp2` 프로그램
 
 다음은 `Hello, world!`를 출력하는 일반적인 한 줄짜리 스타터 프로그램입니다. 이 프로그램은 완전한 프로그램이며 `#include` 가 필요하지 않습니다:
-
+  
 **hello.cpp2 \- 한 줄에**
 
 | main: () \= std::cout \<\< "Hello, world\!\\n"; |
@@ -57,59 +57,80 @@ Visual Studio 에 있는 콘솔 애플리케이션으로 빌드한다.
 하지만 몇 가지를 보여주기 위해 조금 더 추가해 보겠습니다:
 
 **hello.cpp2 \- 조금 더 흥미롭습니다.**
+```
+main: () = {
+    words: std::vector = ( "Alice", "Bob" );
+    hello( words[0] );
+    hello( words[1] );
+}
 
-| main: () \= {    words: std::vector \= ( "Alice", "Bob" );    hello( words\[0\] );    hello( words\[1\] );}hello: (msg: std::string\_view) \=    std::cout \<\< "Hello, (msg)$\!\\n"; |
-| :---- |
+hello: (msg: std::string_view) =
+    std::cout << "Hello, (msg)$!\n";
+```  
+  
+이 짧은 프로그램 코드는 이미 몇 가지 Cpp2 필수 요소를 보여줍니다.  
+  
+**일관된 문맥 없는 구문** Cpp2는 주어진 사물의 철자를 표기하는 하나의 일반적인 방법이 모든 곳에서 일관되게 작동하도록 설계 되었습니다. 모든 Cpp2 타입/함수/객체/네임스페이스는 명확하고 컨텍스트가 없는 [선언 구문](https://hsutter.github.io/cppfront/cpp2/declarations/) **name : kind** 를 사용하여 작성됩니다. `::`는 **is a**로 발음되고, `=` 는 **정의됨** 으로 발음됩니다.  
+  
+* `main` 은 인수를 받지 않고 아무것도 반환하지 않는 함수이며, 표시된 코드 본문이 정의되어 있습니다.  
+* `words` 는 `std::vector` 이며, `Alice` 및 `Bob` 으로로 추기화 되어 있습니다.  
+* `hello` 는 `std::string_view` 로 읽기만 하고 아무것도 반환하지 않는 함수이며, 일반적인 C++ 방식으로 문자열을 `cout` 에 출력하는 코드로 정의되어 있습니다.  
+  
+모든 문법은 문맥에 구애받지 않습니다. 특히 코드를 읽는 사람과 컴파일러는 구문 분석 방법을 파악하기 위해 이름 조회를 할 필요가 없습니다. Cpp2에는 ["vexing 파싱"](https://en.wikipedia.org/wiki/Most_vexing_parse)이 전혀 없습니다. 자세한 내용은 [디자인 참고 사항: 모호하지 않은 구문 분석](https://github.com/hsutter/cppfront/wiki/Design-note%3A-Unambiguous-parsing )을 참조하세요.  
 
-이 짧은 프로그램 코드는 이미 몇 가지 Cpp2 필수 요소를 보여줍니다.
-
-**일관된 문맥 없는 구문** Cpp2는 주어진 사물의 철자를 표기하는 하나의 일반적인 방법이 모든 곳에서 일관되게 작동하도록 설계 되었습니다. 모든 Cpp2 타입/함수/객체/네임스페이스는 명확하고 컨텍스트가 없는 [선언 구문](https://hsutter.github.io/cppfront/cpp2/declarations/) **"*name : kind* `을 사용하여 작성됩니다:`** `:`는 **"is a,"**로 발음되고 `=` 는 **"정의됨."**으로 발음됩니다.
-
-* `main` 은 인수를 받지 않고 아무것도 반환하지 않는 함수이며, 표시된 코드 본문이 정의되어 있습니다다.  
-* `words` **는** `std::vector` 이며, `"Alice"` 및 `"Bob"`로 추기화 되어 있습니다.  
-* `hello` 은 `std::string_view` 로 읽기만 하고 아무것도 반환하지 않는 함수이며, 일반적인 C++ 방식으로 문자열을 `cout` 에 인쇄하는 코드로 정의되어 있습니다.
-
-모든 문법은 문맥에 구애받지 않습니다. 특히 코드를 읽는 사람과 컴파일러는 구문 분석 방법을 파악하기 위해 이름 조회를 할 필요가 없습니다. Cpp2에는 ["vexing 파싱"](https://en.wikipedia.org/wiki/Most_vexing_parse)이 전혀 없습니다. 자세한 내용은 [디자인 참고 사항: 모호하지 않은 구문 분석](https://github.com/hsutter/cppfront/wiki/Design-note%3A-Unambiguous-parsing) 을 참조하세요.
-
-**기본적으로 간단하고 안전하며 효율적입니다.** Cpp2에는 컨트랙트(C++26 컨트랙트 초안 추적), 패턴 매칭, 문자열 보간, 마지막 사용에서 자동 이동 등의 기능이 있습니다.
-
-* `words`를 선언하면 **"CTAD"**(C++의 일반적인 [생성자 템플릿 인수 추론](https://en.cppreference.com/w/cpp/language/class_template_argument_deduction))을 사용하여 `vector`에서 요소의 타입을 추론할 수 있습니다.  
-* `words[0]` 및 `words[1]`는 **bounds-checked by default** 입니다. Cpp2 코드에서 일반 `std::vector` 첨자 액세스는 선호하는 표준 라이브러리로 업그레이드할 필요 없이 기본적으로 안전하게 경계가 검사되며, 이는 `std::size()` 및 `std::begin()`가 임의 액세스 반복기를 반환하는 경우, 이미 보유하고 있는 정수 인덱싱 컨테이너 타입을 포함하여 `std::size()` 및 `std::ssize((아직 제공되지 않은 경우)`를 쉽게 제공할 수 있는 모든 인하우스 정수로 인덱싱된 컨테이너 타입이 포함되어 있습니다.  
-* `hello`는 **string 보간**을 사용하여 `"Hello, (msg)$!"를 쓸 수 있습니다.\n"` 대신 `"Hello, " << msg << "!\n"`. 문자열 보간은 [표준 C++ 형식 사양](https://en.cppreference.com/w/cpp/utility/format/spec)도 지원하므로 아이오스트림 매니퓰레이터가 필요하지 않습니다.
-
-**일반성 \+ 기본값을 통한 단순성** Cpp2가 단순성을 제공하는 주요 방법은 주어진 것에 대해 하나의 강력한 일반 구문(예: 하나의 함수 정의 구문)만 제공하고, 현재 사용하지 않는 부분(예: 기본값에 만족하는 경우)은 생략할 수 있도록 설계하는 것입니다. 위의 기본값 중 일부는 이미 사용하고 있습니다:
-
+**기본적으로 간단하고 안전하며 효율적입니다** Cpp2에는 컨트랙트(C++26 컨트랙트 초안 추적), 패턴 매칭, 문자열 보간, 마지막 사용에서 자동 이동 등의 기능이 있습니다.  
+  
+* `words`를 선언하면 **"CTAD"**(C++의 일반적인 [생성자 템플릿 인수 추론](https://en.cppreference.com/w/cpp/language/class_template_argument_deduction ))을 사용하여 `vector`에서 요소의 타입을 추론할 수 있습니다.  
+* `words[0]` 및 `words[1]`는 **bounds-checked by default** 입니다. Cpp2 코드에서 일반 `std::vector` 첨자 액세스는 선호하는 표준 라이브러리로 업그레이드할 필요 없이 기본적으로 안전하게 경계가 검사되며, 이는 `std::size()` 및 `std::begin()`가 임의 액세스 반복기를 반환하는 경우 이미 보유하고 있는 정수 인덱싱 컨테이너 타입을 포함하여 `std::size()` 및 `std::ssize((아직 제공되지 않은 경우)`를 쉽게 제공할 수 있는 모든 인하우스 정수로 인덱싱된 컨테이너 타입이 포함되어 있습니다.  
+* `hello`는 **string 보간**을 사용하여 `"Hello, (msg)$!"를 쓸 수 있습니다.\n"` 대신 `"Hello, " << msg << "!\n"`. 문자열 보간은 [표준 C++ 형식 사양](https://en.cppreference.com/w/cpp/utility/format/spec)도 지원하므로 아이오스트림 매니퓰레이터가 필요하지 않습니다.  
+  
+**일반성 \+ 기본값을 통한 단순성** Cpp2가 단순성을 제공하는 주요 방법은 주어진 것에 대해 하나의 강력한 일반 구문(예: 하나의 함수 정의 구문)만 제공하고, 현재 사용하지 않는 부분(예: 기본값에 만족하는 경우)은 생략할 수 있도록 설계하는 것입니다. 위의 기본값 중 일부는 이미 사용하고 있습니다:  
+  
 * 이 두 함수처럼 아무것도 반환하지 않는 함수에 대해서는 `-> void` 반환 타입 작성을 생략할 수 있습니다.  
 * `{` `}`는 단일 문 함수 본문에서 `hello`와 같이 생략할 수 있습니다.  
-* `in` 매개변수에서 `msg`를 생략할 수 있습니다. Cpp2에는 매개변수를 전달하는 6가지 방법이 있습니다: 가장 일반적인 것은 읽기 전용의 `in`(기본값이므로 생략할 수 있음)와 읽기-쓰기용의 `inout` 입니다. 나머지는 `copy`, `out`, `move`, `forward` 입니다.
-
-자세한 내용은 [디자인 참고: 기본값은 같은 말을 하는 한 가지 방법](https://github.com/hsutter/cppfront/wiki/Design-note%3A-Defaults-are-one-way-to-say-the-same-thing)를 참조하세요.
-
+* `in` 매개변수에서 `msg`를 생략할 수 있습니다. Cpp2에는 매개변수를 전달하는 6가지 방법이 있습니다: 가장 일반적인 것은 읽기 전용의 `in`(기본값이므로 생략할 수 있음)와 읽기-쓰기용의 `inout` 입니다. 나머지는 `copy`, `out`, `move`, `forward` 입니다.  
+  
+자세한 내용은 [디자인 참고: 기본값은 같은 말을 하는 한 가지 방법](https://github.com/hsutter/cppfront/wiki/Design-note%3A-Defaults-are-one-way-to-say-the-same-thing)를 참조하세요.  
+  
 **기본적으로는 순서 독립적입니다.** `main` 이 나중에 정의된 `hello` 라는 것을 알아차리셨나요? Cpp2 코드는 기본적으로 순서에 독립적이며 정방향 선언이 없습니다.
 
 **원활한 호환성 및 상호 운용.** `std::cout` 및 `std::operactor <<` 및 `std::string_view`를 평소처럼 직접 입력할 수 있습니다. Cpp2 코드는 래핑/마샬링/썽킹 없이 일반적인 직접 호출을 사용하여 표준 라이브러리를 포함한 모든 C++ 코드 또는 라이브러리와 함께 작동합니다.
 
 **C++ 표준 라이브러리는 항상 사용할 수 있습니다.** `#include <iostream>` 또는 `import std; 이 필요하지 않습니다`. 소스 파일에 syntax-2 코드만 포함되어 있고 cppfront의 `-p`(`-pure-cpp2` 의 약어)를 사용하여 컴파일하거나 `-im`(-import-std의 줄임말)를 사용하는 경우. Cppfront는 ISO C++ 위원회에서 C++26 작업 초안에 투표하는 즉시 C++23 및 최신 C++26 라이브러리 추가 사항과 호환되도록 정기적으로 업데이트 되므로 새로운 표준(또는 최첨단 표준 초안\!) C++ 라이브러리 기능이 포함된 C++ 구현이 있는 경우 Cpp2 코드에서 이를 완전히 사용할 수 있습니다.
-
-## 빌드 `hello.cpp2`
-
+  
+### `hello.cpp2` 빌드하기
 이제 `cppfront`를 사용하여 `hello.cpp2` 를 표준 C++ 파일인 `hello.cpp`로 컴파일합니다:
 
 **cppfront를 호출하여 hello.cpp 생성**
+```
+cppfront hello.cpp2 -p
+```  
+  
+결과는 다음과 같은 일반 C++ 파일이 생성됩니다
+```
+#define CPP2_IMPORT_STD          Yes
 
-| cppfront hello.cpp2 \-p |
-| :---- |
+#include "cpp2util.h"
 
-결과는 다음과 같은 일반 C++ 파일입니다: 
+auto main() -> int;
 
-| \#define CPP2\_IMPORT\_STD          Yes\#include "cpp2util.h"auto main() \-\> int;auto hello(cpp2::in\<std::string\_view\> msg) \-\> void;auto main() \-\> int{    std::vector words {"Alice", "Bob"};    hello(CPP2\_ASSERT\_IN\_BOUNDS\_LITERAL(words, 0));    hello(CPP2\_ASSERT\_IN\_BOUNDS\_LITERAL(std::move(words), 1));}auto hello(cpp2::in\<std::string\_view\> msg) \-\> void {    std::cout \<\< ("Hello, " \+ cpp2::to\_string(msg) \+ "\!\\n");  }  |
-| :---- |
+auto hello(cpp2::in<std::string_view> msg) -> void;
+auto main() -> int{
+    std::vector words {"Alice", "Bob"};
+    hello(CPP2_ASSERT_IN_BOUNDS_LITERAL(words, 0));
+    hello(CPP2_ASSERT_IN_BOUNDS_LITERAL(std::move(words), 1));
+}
 
+auto hello(cpp2::in<std::string_view> msg) -> void {
+    std::cout << ("Hello, " + cpp2::to_string(msg) + "!\n");  }
+```     
+  
 여기에서 Cpp2의 기능 작동 방식을 자세히 살펴볼 수 있습니다.
 
 **방법: 일관된 컨텍스트 프리 구문**
 
 * **컴파일된 모든 줄은 이식 가능한 C++20 코드**로 2019년 이후에 출시된 거의 모든 C++ 컴파일러로 빌드할 수 있습니다. Cpp2의 컨텍스트 프리 구문은 오늘날의 Cpp1 구문으로 바로 변환됩니다. 컨텍스트 민감성이나 모호성 때문에 씨름할 필요 없이 더 간단한 Cpp2 구문으로 C++ 타입/함수/객체를 작성하고 읽을 수 있으며, 여전히 모두 일반적인 타입/함수/객체일 뿐입니다.
+  
 
 **방법: 기본적으로 간단하고 안전하며 효율적입니다.**
 
@@ -133,30 +154,38 @@ Visual Studio 에 있는 콘솔 애플리케이션으로 빌드한다.
 **How: C++ 표준 라이브러리를 항상 사용할 수 있습니다.**
 
 * **라인 1 및 3: `std::`가 사용 가능**합니다. 왜냐하면 cppfront가 `-p`로 호출되었기 때문입니다, (`-im`의 줄임말) 또는 `-in`(아직 모듈을 지원하지 않는 컴파일러의 경우 `-include-std`의 줄임말) 중 하나를 의미할 수 있습니다. 생성된 코드는 `cpp2util.h`에 전체 표준 라이브러리를 모듈로 가져오라고 지시합니다(또는 모듈을 사용할 수 없는 경우 헤더를 통해 동등한 작업을 수행합니다).
+  
 
-## 최신 C++ 컴파일러로 `hello.cpp` 빌드 및 실행하기
-
+### 최신 C++ 컴파일러로 `hello.cpp` 빌드 및 실행하기
 마지막으로, 자주 사용하는 C++20 컴파일러를 사용하여 `hello.cpp`를 빌드하면 됩니다. 여기서 `CPPFRONT_INCLUDE`는 `/cppfront/include`에 대한 경로가 됩니다:
 
 **MSVC(Visual Studio 2019 버전 16.11 이상)**
-
-| \> cl hello.cpp \-std:c++20 \-EHsc \-I CPPFRONT\_INCLUDE\> hello.exeHello, world\! |
-| :---- |
-
+```
+> cl hello.cpp -std:c++20 -EHsc -I CPPFRONT_INCLUDE
+> hello.exe
+Hello, world!
+```
+  
 **GCC(GCC 10 이상)**
-
-| $ g++ hello.cpp \-std=c++20 \-ICPPFRONT\_INCLUDE \-o hello$ ./hello.exeHello, world\! |
-| :---- |
-
+```
+$ g++ hello.cpp -std=c++20 -ICPPFRONT_INCLUDE -o hello
+$ ./hello.exe
+Hello, world!
+```  
+  
 **Clang(Clang 12 이상)**
+```
+$ clang++ hello.cpp -std=c++20 -ICPPFRONT_INCLUDE -o hello
+$ ./hello.exe
+Hello, world!
+```  
+  
+  
+<br>  
 
-| $ clang++ hello.cpp \-std=c++20 \-ICPPFRONT\_INCLUDE \-o hello$ ./hello.exeHello, world\! |
-| :---- |
-
-### 
-
-# [기존 C++ 프로젝트에 cppfront 추가하기](https://hsutter.github.io/cppfront/welcome/integration/)
-
+---    
+## [기존 C++ 프로젝트에 cppfront 추가하기](https://hsutter.github.io/cppfront/welcome/integration/)
+  
 기존 C++ 프로젝트에서 Cpp2 구문을 사용해 보려면 빌드 단계를 추가하여 Cpp2를 Cpp1 구문으로 변환하기만 하면 됩니다:
 
 * `.cpp` 파일을 같은 이름으로 복사하고 확장자를 `.cpp2`로 지정합니다.  
